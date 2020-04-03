@@ -16,7 +16,10 @@ public abstract class EarthquakeMarker extends CommonMarker implements Comparabl
 	
 	// Did the earthquake occur on land?  This will be set by the subclasses.
 	protected boolean isOnLand;
-
+	
+	//time, when earthquake was
+	protected boolean isChosenTime = false;
+	
 	// The radius of the Earthquake marker
 	// either used the thresholds below
 	protected float radius;
@@ -176,6 +179,16 @@ public abstract class EarthquakeMarker extends CommonMarker implements Comparabl
 	public boolean isOnLand()
 	{
 		return isOnLand;
+	}
+	
+	public boolean isChosen() 
+	{
+		return isChosenTime;
+	}
+	
+	public void setChosen(boolean choose) 
+	{
+		isChosenTime = choose;
 	}
 	
 

@@ -12,11 +12,12 @@ import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.AbstractShapeMarker;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
-import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.providers.Microsoft;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import parsing.ParseFeed;
 import processing.core.PApplet;
+
+import java.awt.event.KeyEvent;
 
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
@@ -139,6 +140,75 @@ public class EarthquakeCityMap extends PApplet {
 	/** Event handler that gets called automatically when the 
 	 * mouse moves.
 	 */
+	   
+	   @Override
+	
+	
+	public void keyPressed() 
+	{
+		   
+		 //F1 = showing past hour` earthquakes
+		   if (keyCode == KeyEvent.VK_F1) {
+			   for(Marker marker : quakeMarkers) {
+				   String age = marker.getStringProperty("age");
+				   if (((EarthquakeMarker) marker).isChosen() == false)
+					   marker.setHidden(true);
+				   if ("Past Hour".equals(age) ) 
+				   {
+					   ((EarthquakeMarker) marker).setChosen(true);
+					   marker.setHidden(false);
+				
+				   }
+			
+			   }
+			   
+		   }
+		 //F2 = showing past day earthquakes
+		   if (keyCode == KeyEvent.VK_F2) {
+				for(Marker marker : quakeMarkers) {
+					String age = marker.getStringProperty("age");
+					if (((EarthquakeMarker) marker).isChosen() == false)
+						marker.setHidden(true);
+						if ("Past Day".equals(age) ) 
+						{
+							((EarthquakeMarker) marker).setChosen(true);
+							marker.setHidden(false);	
+						}
+				}
+				
+			}
+		   
+		   //F3 = showing past week earthquakes
+		   if (keyCode == KeyEvent.VK_F3) {
+				for(Marker marker : quakeMarkers) {
+					String age = marker.getStringProperty("age");
+					if (((EarthquakeMarker) marker).isChosen() == false)
+						marker.setHidden(true);
+						if ("Past Week".equals(age) ) 
+						{
+							((EarthquakeMarker) marker).setChosen(true);
+							marker.setHidden(false);
+						
+						}
+				
+				}
+				
+			}
+		    
+		   // Restoring default map with markers
+		   if (keyCode == KeyEvent.VK_F4) {
+		    	for (Marker marker : quakeMarkers) {
+		    		marker.setHidden(false);
+		    		((EarthquakeMarker) marker).setChosen(false);
+		    	}
+		    
+		    	
+		    }
+		   
+		   
+		
+	}
+	   
 	@Override
 	public void mouseMoved()
 	{
@@ -174,9 +244,8 @@ public class EarthquakeCityMap extends PApplet {
 	 * Or if a city is clicked, it will display all the earthquakes 
 	 * where the city is in the threat circle
 	 */
-	@Override
-	public void mouseClicked()
-	{
+	
+	public void clicked() {
 		if (lastClicked != null) {
 			unhideMarkers();
 			lastClicked = null;
@@ -188,6 +257,12 @@ public class EarthquakeCityMap extends PApplet {
 				checkCitiesForClick();
 			}
 		}
+	}
+	
+	@Override	
+	public void mouseClicked()
+	{
+		clicked();
 	}
 	
 	// Helper method that will check if a city marker was clicked on
@@ -263,7 +338,7 @@ public class EarthquakeCityMap extends PApplet {
 		int xbase = 25;
 		int ybase = 50;
 		
-		rect(xbase, ybase, 150, 250);
+		rect(xbase, ybase, 150, 450);
 		
 		fill(0);
 		textAlign(LEFT, CENTER);
